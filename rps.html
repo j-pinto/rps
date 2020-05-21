@@ -1,0 +1,152 @@
+<head></head>
+<body></body>
+<script>
+
+    function computerPlay()
+    {
+        let x = Math.floor((Math.random() * 3) + 1);
+        let selection;
+
+        if (x == 1){
+            selection = "rock";
+        }
+        else if (x == 2)
+        {
+            selection = "paper";
+        }
+        else if (x == 3)
+        {
+            selection = "scissors";
+        }
+
+        return selection;
+    }
+
+    function humanPlay()
+    {
+        let response = prompt("enter rock, paper, or scissors");
+        let selection;
+
+        if (response.localeCompare("rock", 'en', {sensitivity:'base'}) == 0)
+        {
+            selection = response.toLowerCase();
+        }
+        else if (response.localeCompare("paper", 'en', {sensitivity:'base'}) == 0)
+        {
+            selection = response.toLowerCase();
+        }
+        else if (response.localeCompare("scissors", 'en', {sensitivity:'base'}) == 0)
+        {
+            selection = response.toLowerCase();
+        }
+        else
+        {
+            alert("invalid entry! refresh page to try again.")
+        }
+
+        return selection
+    }
+
+    function playRound(plyr, comp)
+    {
+        let win;
+
+        if (plyr == "rock" && comp == "paper")
+        {
+            win = -1;
+        }
+        else if (plyr == "rock" && comp == "scissors")
+        {
+            win = 1;
+        }
+        else if (plyr == "paper" && comp == "rock")
+        {
+            win = 1;
+        }
+        else if (plyr == "paper" && comp == "scissors")
+        {
+            win = -1;
+        }
+        else if (plyr == "scissors" && comp == "rock")
+        {
+            win = -1;
+        }
+        else if (plyr == "scissors" && comp == "paper")
+        {
+            win = 1;
+        }
+        else
+        {
+            win = 0;
+        }
+
+        return win;
+    }
+
+    function resultReport(win, plyr, comp, p_score, c_score)
+    {  
+        let result;
+        if (win == 1)
+        {
+            result = 'You win this round! You played ' + plyr + ' and the computer played ' + comp + '. Current game score is: You: ' + p_score + ' Computer: ' + c_score;
+        }
+        else if (win == -1)
+        {
+            result = 'You lose this round! You played ' + plyr + ' and the computer played ' + comp + '. Current game score is: You: ' + p_score + ' Computer: ' + c_score;
+        }
+        else if (win == 0)
+        {
+            result = 'This round is a tie! You and the computer both played ' + plyr + '. Current game score is: You: ' + p_score + ' Computer: ' + c_score;
+        }
+
+        return result;
+    }
+
+    function game()
+    {
+        let computerSelection = computerPlay();
+        console.log("compSel", computerSelection);
+
+        let playerSelection = humanPlay();
+        console.log("playerSel", playerSelection);
+
+        let playerWin = playRound(playerSelection, computerSelection);
+        console.log("win", playerWin);
+
+        if (playerWin == 1) 
+        {
+            playerScore++;
+        }
+        else if (playerWin == -1) 
+        {
+            computerScore++;
+        }
+        let outcome = resultReport(playerWin, playerSelection, computerSelection, playerScore, computerScore);
+        alert(outcome);
+    }
+
+    let playerScore = 0;
+    let computerScore = 0;
+
+    for (let i = 0; i < 5; i++)
+    {
+        game();
+
+        if (i == 4 && playerScore > computerScore)
+        {
+            alert("player won majority of 5 rounds! refresh page to play again");
+            break;
+        }
+        else if (i == 4 && playerScore < computerScore)
+        {
+            alert("computer won majority of 5 rounds! refresh page to play again");
+            break;
+        }
+        else if (i == 4 && playerScore == computerScore)
+        {
+            alert("after five rounds the game is a tie, no one won a majority of rounds")
+        }
+    }
+    
+
+</script>
